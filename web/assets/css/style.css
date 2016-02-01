@@ -1,0 +1,66 @@
+@import url(bootstrap.min.css);
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+  padding-top: 50px;
+  padding-bottom: 20px;
+}
+
+.jumbotron {
+	background: #F8BBD0;
+}
+
+#habgm0 {
+  max-width: 700px;
+  padding: 10px 30px 30px 10px;
+}
+
+#ee16aShirt {
+  max-width: 700px;
+  padding: 10px 30px 30px 10px;
+}
+
+#missionShirt {
+  max-width: 550px;
+  padding: 10px 30px 30px 10px;
+}
+
+#potatoes {
+  max-width: 700px;
+  padding: 10px 30px 30px 10px;
+}
+
+#beehive {
+  max-width: 500px;
+  padding: 10px 30px 30px 10px;
+}
+
+#honeycombs {
+  max-width: 500px;
+  padding: 10px 30px 30px 10px;
+}
+
+#yangRWBY {
+  max-width: 500px;
+  padding: 10px 30px 30px 10px;
+}
+
+#sapling {
+  max-width: 500px;
+  padding: 10px 30px 30px 10px;
+}
+
+#thanksgiving {
+  max-width: 700px;
+  padding: 10px 30px 30px 10px;
+}
+
+#crypto {
+  max-width: 700px;
+  padding: 10px 30px 30px 10px;
+}
+
+#ling {
+  max-width: 700px;
+  padding: 10px 30px 30px 10px;
+}
