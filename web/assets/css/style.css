@@ -10,57 +10,78 @@ body {
 	background: #F8BBD0;
 }
 
+.carousel-inner > .item > img {
+  margin: 0 auto;
+}
+
+.carousel-indicators li {
+  background-color: #FFFFFF;
+  background-color: rgba(0, 0, 0, 0.5);
+  text-shadow: none;
+}
+
+.carousel-indicators .active {
+  background-color: #000000;
+  text-shadow: none;
+}
+
+.carousel-caption {
+  color: #000000;
+  font-size: 14px;
+  text-shadow: none;
+}
+
 #habgm0 {
-  max-width: 700px;
-  padding: 10px 30px 30px 10px;
+  max-height: 500px;
+  padding-bottom: 140px;
 }
 
 #ee16aShirt {
-  max-width: 700px;
-  padding: 10px 30px 30px 10px;
+  max-height: 500px;
+  padding-bottom: 140px;
 }
 
 #missionShirt {
-  max-width: 550px;
-  padding: 10px 30px 30px 10px;
+  max-height: 500px;
+  padding-bottom: 140px;
 }
 
 #potatoes {
-  max-width: 700px;
-  padding: 10px 30px 30px 10px;
-}
-
-#beehive {
-  max-width: 500px;
-  padding: 10px 30px 30px 10px;
+  max-height: 500px;
+  padding-bottom: 140px;
 }
 
 #honeycombs {
-  max-width: 500px;
-  padding: 10px 30px 30px 10px;
+  max-height: 500px;
+  padding-bottom: 140px;
+}
+
+#beehive {
+  max-height: 500px;
+  padding-bottom: 140px;
 }
 
 #yangRWBY {
-  max-width: 500px;
-  padding: 10px 30px 30px 10px;
+  max-height: 500px;
+  padding-bottom: 140px;
 }
 
 #sapling {
-  max-width: 500px;
-  padding: 10px 30px 30px 10px;
+  max-height: 500px;
+  padding-bottom: 140px;
 }
 
 #thanksgiving {
-  max-width: 700px;
-  padding: 10px 30px 30px 10px;
+  max-height: 500px;
+  padding-bottom: 140px;
 }
 
 #crypto {
-  max-width: 700px;
-  padding: 10px 30px 30px 10px;
+  max-height: 500px;
+  padding-bottom: 140px;
 }
 
 #ling {
-  max-width: 700px;
-  padding: 10px 30px 30px 10px;
+  max-height: 500px;
+  padding-bottom: 140px;
 }
