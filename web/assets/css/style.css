@@ -7,7 +7,7 @@ body {
 }
 
 .jumbotron {
-	background: #F8BBD0;
+	background: #ffcccc;
 }
 
 .carousel-inner > .item > img {
@@ -31,62 +31,81 @@ body {
   text-shadow: none;
 }
 
+#carousel-design-port {
+  margin-top: -30px;
+}
+
+#itsme {
+  margin-top: 15px;
+  margin-left: 20px;
+}
+
+#myDescription {
+  padding-top: 25px;
+}
+
 #habgm0 {
   max-height: 500px;
   padding-bottom: 140px;
+  margin-top: 10px;
 }
 
 #bbb3 {
   max-height: 500px;
   padding-bottom: 140px;
+  margin-top: 10px;
 }
 
 #ee16aShirt {
   max-height: 500px;
+  margin-top: 10px;
   padding-bottom: 140px;
 }
 
 #missionShirt {
   max-height: 500px;
+  margin-top: 10px;
   padding-bottom: 140px;
 }
 
 #potatoes {
   max-height: 500px;
+  margin-top: 10px;
   padding-bottom: 140px;
 }
 
 #honeycombs {
   max-height: 500px;
+  margin-top: 10px;
   padding-bottom: 140px;
 }
 
 #beehive {
   max-height: 500px;
+  margin-top: 10px;
   padding-bottom: 140px;
 }
 
 #yangRWBY {
   max-height: 500px;
+  margin-top: 10px;
   padding-bottom: 140px;
 }
 
 #sapling {
   max-height: 500px;
+  margin-top: 10px;
   padding-bottom: 140px;
 }
 
-#thanksgiving {
+#hackerFair {
   max-height: 500px;
   padding-bottom: 140px;
+  margin-top: 10px;
 }
 
-#crypto {
+#javascriptWS {
   max-height: 500px;
   padding-bottom: 140px;
-}
-
-#badhax {
-  max-height: 500px;
-  padding-bottom: 140px;
+  margin-top: 10px;
 }
