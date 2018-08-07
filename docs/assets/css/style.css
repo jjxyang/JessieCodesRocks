@@ -11,6 +11,10 @@ body {
 }
 
 .carousel-inner > .item > img {
+  max-height: 500px;
+  padding-bottom: 120px;
+  padding-top: 10px;
+  margin-top: 10px;
   margin: 0 auto;
 }
 
@@ -42,59 +46,4 @@ body {
 
 #myDescription {
   padding-top: 25px;
-}
-
-#bb-logo {
-  max-height: 500px;
-  padding-bottom: 140px;
-  margin-top: 10px;
-}
-
-#course-scheduling {
-  max-height: 500px;
-  padding-bottom: 140px;
-  margin-top: 10px;
-}
-
-#create3d-flyer {
-  max-height: 500px;
-  margin-top: 10px;
-  padding-bottom: 140px;
-}
-
-#create3d-logo {
-  min-height: 500px;
-  max-height: 500px;
-  margin-top: 10px;
-  padding-bottom: 140px;
-}
-
-#eecs-icons {
-  max-height: 500px;
-  margin-top: 10px;
-  padding-bottom: 140px;
-}
-
-#pensive-mukuro {
-  max-height: 500px;
-  margin-top: 10px;
-  padding-bottom: 140px;
-}
-
-#pride-tracer {
-  max-height: 500px;
-  margin-top: 10px;
-  padding-bottom: 140px;
-}
-
-#speaker-series {
-  max-height: 500px;
-  margin-top: 10px;
-  padding-bottom: 140px;
-}
-
-#missionShirt {
-  max-height: 500px;
-  margin-top: 10px;
-  padding-bottom: 140px;
 }
