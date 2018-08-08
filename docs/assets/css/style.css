@@ -1,49 +1,28 @@
 @import url(bootstrap.min.css);
 
 /* Move down content because we have a fixed navbar that is 50px tall */
-body {
+/* body {
   padding-top: 50px;
   padding-bottom: 20px;
-}
+} */
 
 .jumbotron {
-	background: #ffcccc;
+  background: #FFFFFF;
 }
 
-.carousel-inner > .item > img {
-  max-height: 500px;
-  padding-bottom: 120px;
-  padding-top: 10px;
-  margin-top: 10px;
-  margin: 0 auto;
-}
-
-.carousel-indicators li {
-  background-color: #FFFFFF;
-  background-color: rgba(0, 0, 0, 0.5);
-  text-shadow: none;
-}
-
-.carousel-indicators .active {
-  background-color: #000000;
-  text-shadow: none;
-}
-
-.carousel-caption {
-  color: #000000;
-  font-size: 14px;
-  text-shadow: none;
-}
-
-#carousel-design-port {
-  margin-top: -30px;
+.card-img-top {
+  max-width: 100%;
+  height: auto;
+  padding: 0px;
 }
 
 #itsme {
+  width: 250px;
+  height: 250px;
   margin-top: 15px;
-  margin-left: 20px;
+  /* margin-left: -10px; */
 }
 
 #myDescription {
-  padding-top: 25px;
+  padding-top: 15px;
 }

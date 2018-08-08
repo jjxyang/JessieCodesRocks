@@ -8,6 +8,7 @@
     <title>Jessie Yang - Design Portfolio</title>
 
     <link href="assets/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -37,119 +38,108 @@
       <div class="container">
         <h1>Design Portfolio</h1>
       </div>
-    </div>
 
-    <!--Design Portfolio Carousel that does not Autoplay -->
-    <div id="carousel-design-port" class="carousel slide" data-ride="carousel"
-         data-interval="false">
-      <!-- Indicators -->
-      <ol class="carousel-indicators">
-        <li data-target="#carousel-design-port" data-slide-to="0" class="active"></li>
-        <li data-target="#carousel-design-port" data-slide-to="1"></li>
-        <li data-target="#carousel-design-port" data-slide-to="2"></li>
-        <li data-target="#carousel-design-port" data-slide-to="3"></li>
-        <li data-target="#carousel-design-port" data-slide-to="4"></li>
-        <li data-target="#carousel-design-port" data-slide-to="5"></li>
-        <li data-target="#carousel-design-port" data-slide-to="6"></li>
-        <li data-target="#carousel-design-port" data-slide-to="7"></li>
-        <li data-target="#carousel-design-port" data-slide-to="8"></li>
-      </ol>
+    <div class="album py-5 bg-light">
+      <div class="container">
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="card mb-4 shadow">
+                <img class="card-img-top" src="assets/img/portfolio/eecs-icons.png" alt="EECS Shirt Design">
+                <div class="card-body">
+		          <h3 class="card-title">Electrical Engineering & Computer Sciences</h3>
+                  <p class="card-text">Shirt Design</p>
+                </div>
+              </div>
+            </div>
 
-      <!-- Wrapper for slides -->
-      <div class="carousel-inner" role="listbox">
-        <div class="item active">
-          <img id="eecs-icons" src="assets/img/portfolio/eecs-icons.png"
-            alt="EECS Shirt Design">
-          <div class="carousel-caption">
-	    <h3>Electrical Engineering & Computer Sciences</h3>
-            <p>Shirt Design</p>
-          </div>
-        </div>
+            <div class="col-sm-4">
+              <div class="card mb-4 shadow">
+                <img class="card-img-top" src="assets/img/portfolio/bb-logo.png" alt="Berkeley Builds 2017 Logo">
+                <div class="card-body">
+		          <h3 class="card-title"><a href="https://www.facebook.com/berkeleybuilds/">Berkeley Builds 2017</a></h3>
+                  <p class="card-text">Logo</p>
+                </div>
+              </div>
+            </div>
 
-        <div class="item">
-          <img id="bb-logo" src="assets/img/portfolio/bb-logo.png"
-            alt="Berkeley Builds 2017 Logo">
-          <div class="carousel-caption">
-	    <h3><a href="https://www.facebook.com/berkeleybuilds/">Berkeley Builds</a> 2017</h3>
-            <p>Logo</p>
-          </div>
-        </div>
-	
-        <div class="item">
-          <img id="create3d-logo" src="assets/img/portfolio/create3d-logo.png"
-            alt="Create3D: 3D Printing Designathon 2017 Logo">
-          <div class="carousel-caption">
-	    <h3><a href="https://www.facebook.com/events/1911249752443550/">Create3D: 3D Printing Designathon</a> 2017</h3>
-            <p>Logo</p>
-          </div>
-        </div>
+            <div class="col-sm-4">
+              <div class="card mb-4 shadow">
+                <img class="card-img-top" src="assets/img/portfolio/man-on-a-mission-shirt.png" alt="Typography/Shirt Design">
+                <div class="card-body">
+                  <h3 class="card-title">"Man on a Mission" Shirt Design</h3>
+                  <p class="card-text">Quote from "Jellyfish" by Sarah Kay</p>
+                </div>
+              </div>
+            </div>
+          </div> <!-- row -->
 
-        <div class="item">
-          <img id="create3d-flyer" src="assets/img/portfolio/create3d-flyer.png"
-            alt="Create3D: 3D Printing Designathon 2017 Sample Flyer">
-          <div class="carousel-caption">
-	    <h3><a href="https://www.facebook.com/events/1911249752443550/">Create3D: 3D Printing Designathon</a> 2017</h3>
-            <p>Sample Flyer</p>
-          </div>
-        </div>
+	    <!--
+            <div class="col-sm-4">
+              <div class="card mb-4 shadow">
+                <div class="card-body">
+		  <img class="card-img-top" src="assets/img/portfolio/create3d-logo.png" alt="Create3D: 3D Printing Designathon 2017 Logo">
+		  <h3 class="card-title"><a href="https://www.facebook.com/events/1911249752443550/">Create3D: 3D Printing Designathon 2017</a></h3>
+                  <p class="card-text">Logo</p>
+                </div>
+              </div>
+            </div>
+	    -->
 
-        <div class="item">
-          <img id="course-scheduling" src="assets/img/portfolio/course-scheduling.png"
-            alt="HKN Course Scheduling Workshop 2018">
-          <div class="carousel-caption">
-	    <h3><a href="https://www.facebook.com/events/232936173920602/">HKN Course Scheduling Workshop 2018</a></h3>
-            <p>Facebook Banner</p>
-          </div>
-        </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="card mb-6 shadow">
+		        <img class="card-img-top" src="assets/img/portfolio/course-scheduling.png" alt="HKN Course Scheduling Workshop 2018">
+                <div class="card-body">
+		        <h3 class="card-title"><a href="https://www.facebook.com/events/232936173920602/">HKN Course Scheduling Workshop 2018</a></h3>
+                  <p class="card-text">Facebook Banner</p>
+                </div>
+              </div>
+            </div>
 
-        <div class="item">
-          <img id="speaker-series" src="assets/img/portfolio/speaker-series.png"
-            alt="HKN Speaker Series with Ellen Petry Leanse">
-          <div class="carousel-caption">
-	    <h3><a href="https://www.facebook.com/events/434792236955418/">HKN Speaker Series with Ellen Petry Leanse</a></h3>
-            <p>Facebook Banner</p>
+            <div class="col-sm-6">
+              <div class="card mb-6 shadow">
+		        <img class="card-img-top" src="assets/img/portfolio/speaker-series.png" alt="HKN Speaker Series with Ellen Petry Leanse">
+                <div class="card-body">
+		          <h3 class="card-title"><a href="https://www.facebook.com/events/434792236955418/">HKN Speaker Series with Ellen Petry Leanse</a></h3>
+                  <p class="card-text">Facebook Banner</p>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
 
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="card mb-4 shadow">
+		        <img class="card-img-top" src="assets/img/portfolio/create3d-flyer.png" alt="Create3D: 3D Printing Designathon 2017 Logo and Flyer">
+                <div class="card-body">
+		          <h3 class="card-title"><a href="https://www.facebook.com/events/1911249752443550/">Create3D: 3D Printing Designathon 2017</a></h3>
+                  <p class="card-text">Logo and Flyer</p>
+                </div>
+              </div>
+            </div>
 
-        <div class="item">
-          <img id="missionShirt" src="assets/img/portfolio/man-on-a-mission-shirt.png"
-            alt="T-Shirt Design (ft. quote from 'Jellyfish' by Sarah Kay)">
-          <div class="carousel-caption">
-            <h3>"Man on a Mission" Shirt Design</h3>
-            <p>Featuring quote from "Jellyfish" by Sarah Kay</p>
-          </div>
-        </div>
-	
-	<div class="item">
-          <img id="pride-tracer" src="assets/img/portfolio/pride-tracer.png"
-            alt="Pride (ft. Tracer from Overwatch)">
-          <div class="carousel-caption">
-            <h3>Pride</h3>
-            <p>Tracer from Overwatch</p>
-          </div>
-        </div>
+            <div class="col-sm-4">
+              <div class="card mb-4 shadow">
+		        <img class="card-img-top" src="assets/img/portfolio/pride-tracer.png" alt="Pride (ft. Tracer from Overwatch)">
+                <div class="card-body">
+		          <h3 class="card-title">Pride</h3>
+                  <p class="card-text">Tracer from Overwatch</p>
+                </div>
+              </div>
+            </div>
 
-	<div class="item">
-          <img id="pensive-mukuro" src="assets/img/portfolio/pensive-mukuro.png"
-            alt="Pensive (ft. Mukuro Ikusaba from Dangan Ronpa)">
-          <div class="carousel-caption">
-            <h3>Pensive</h3>
-            <p>Mukuro Ikusaba from Dangan Ronpa</p>
-          </div>
+            <div class="col-sm-4">
+              <div class="card mb-4 shadow">
+		        <img class="card-img-top" src="assets/img/portfolio/pensive-mukuro.png" alt="IF (ft. Mukuro from Dangan Ronpa)">
+                <div class="card-body">
+		          <h3 class="card-title">IF</h3>
+                  <p class="card-text">Mukuro Ikusaba from Dangan Ronpa</p>
+                </div>
+              </div>
+            </div>
+	      </div> <!-- row -->
         </div>
       </div>
-
-      <!-- Controls -->
-      <a class="left carousel-control" href="#carousel-design-port" role="button" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-      </a>
-      <a class="right carousel-control" href="#carousel-design-port" role="button" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-      </a>
-    </div>
 
       <hr>
 
