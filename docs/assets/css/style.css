@@ -6,6 +6,24 @@
   padding-bottom: 20px;
 } */
 
+p {
+    font-size: 1.5rem;
+}
+
+p > .btn {
+    font-size: 1.5rem;
+}
+
+.container > .navbar-header > .navbar-brand {
+    display: inline-block;
+    padding-top: 1rem;
+    padding-bottom: 0.3125rem;
+    /* margin-right: 1rem; */
+    font-size: 1.75rem;
+    line-height: inherit;
+    white-space: nowrap;
+}
+
 .jumbotron {
   background: #FFFFFF;
 }
