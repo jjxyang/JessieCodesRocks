@@ -1,0 +1,369 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<style>
+  div.padded {
+    padding-top: 0px;
+    padding-right: 20px;
+    padding-bottom: 0.25in;
+    padding-left: 20px;
+  }
+</style>
+
+<title>Jessie Yang  |  CS 184 Path Tracer, Part 1</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+</head>
+<body>
+<br />
+<h1 align="middle">Assignment 3-2: PathTracer</h1>
+    <h2 align="middle">Jessie Yang - cs184-aga</h2>
+
+    <div class="padded">
+      <p>In this project, as an extension of Project 3-1, we implemented more ray tracing features. This included being able to render mirror and glass materials, microfacet materials, environmental lighting, and depth of field effects. We also got an opportunity to learn and practice OpenGL programming in the last section of this project, allowing us to actually work with GPU-optimized libraries instead of just rendering everything with our CPUs. It was an awesome project, making our ray tracer capable of more and more. There's so much it can render now, and that's amazing!</p>
+      <p>I encountered a couple of problems implementing Part 1 of the project, mostly due to mixing up the order and conditions under which the ligth should bounce - for example, the at_least_one_bounce_radiance doesn't always add one-bounce radiance if it's a delta light. I resolved this mostly by reviewing the spec and reasoning about what is "physically" happening in the scene. Otherwise, I also had a seemingly excessive amount of noise for a while, but one way I fixed this was by reducing the termination probability, giving the ray tracer more bounces on average to converge.</p>
+      <p>The other parts, 2-4, were more of challenges in better understanding the concepts we were programming. Part 4 in particular helped me understand some of the thinking/geometry behind thin lens rays and the like.</p>
+      <p>Part 5 was an interesting challenge in simply applying the concepts we've already learned with a new language; a lot of the challenge came from adapting to a new framework as well, thinking about the same ideas but in a slightly different way. Most of this was resolved by reading Piazza clarifications, reading more documentation, and talking with friends.</p>
+
+      <hr><br>
+
+    <h2 align="middle">Part 1: Mirror and Glass Materials</h2>
+      <h3 aligh="middle">Prompts</h3>
+        <ol>
+          <li>Show a sequence of six images of scene CBspheres.dae rendered with max_ray_depth set to 0, 1, 2, 3, 4, 5, and 100. The other settings should be at least 64 samples per pixel and 4 samples per light. Point out the new multibounce effects that appear in each image.</li>
+        </ol><br><br>
+
+      <h3 aligh="middle">Responses</h3>
+        <ol>
+          <li>In zero bounces, we see only the area light.<br>
+            In one bounce, we can see some direct lighting effects.<br>
+            In two bounces, we can start seeing the spheres reflecting or refracting some light.<br>
+            In three bounces, we see the right sphere actually refracts/bends light from the room and a bit of light from the right sphere at two-bounces is reflecting on the left sphere.<br>
+            In four bounces, we see the right sphere have a bright whiteish glare at its base, and the left sphere reflects more of the right sphere's light now.<br>
+            In five bounces, the right sphere also has a small bit of refracted light near the blue wall. The left sphere also has the right sphere's glare show up in it a little.<br>
+            In 100 bounces, the image has mostly converged and we don't see too many new multibounce effects.<br>
+          </li>
+        </ol>
+
+        <div align="center">
+            <p><i>64 samples per pixel, 4 samples per light</i></p>
+            <table style="width=100%">
+                <tr>
+                    <td align="middle">
+                    <img src="images/part1/CBspheres_64s_4l_m0.png" width="480px" />
+                    <figcaption align="middle"><b>max_ray_depth</b> = 0</figcaption>
+                    <td align="middle">
+                    <img src="images/part1/CBspheres_64s_4l_m1.png" width="480px" />
+                    <figcaption align="middle"><b>max_ray_depth</b> = 1</figcaption>
+                    <td align="middle">
+                    <img src="images/part1/CBspheres_64s_4l_m2.png" width="480px" />
+                    <figcaption align="middle"><b>max_ray_depth</b> = 2</figcaption>
+                </tr>
+                <tr>
+                    <td align="middle">
+                    <img src="images/part1/CBspheres_64s_4l_m3.png" width="480px" />
+                    <figcaption align="middle"><b>max_ray_depth</b> = 3</figcaption>
+                    <td align="middle">
+                    <img src="images/part1/CBspheres_64s_4l_m4.png" width="480px" />
+                    <figcaption align="middle"><b>max_ray_depth</b> = 4</figcaption>
+                    <td align="middle">
+                    <img src="images/part1/CBspheres_64s_4l_m5.png" width="480px" />
+                    <figcaption align="middle"><b>max_ray_depth</b> = 5</figcaption>
+                </tr>
+                <tr>
+                    <td align="middle">
+                    <img src="images/part1/CBspheres_64s_4l_m100.png" width="480px" />
+                    <figcaption align="middle"><b>max_ray_depth</b> = 100</figcaption>
+                </tr>
+            </table>
+        </div><br>
+      <hr><br>
+
+
+    <h2 align="middle">Part 2: Microfacet Material</h2>
+      <h3 aligh="middle">Prompts</h3>
+      <ol>
+        <li>Show a sequence of 4 images of scene CBdragon_microfacet_au.dae rendered with α set to 0.005, 0.05, 0.25 and 0.5. The other settings should be at least 128 samples per pixel and 1 samples per light. The number of bounces should be at least 5. Describe the differences between different images. Note that, to change the α, just open the .dae file and search for microfacet.</li>
+        <li>Show two images of scene CBbunny_microfacet_cu.dae rendered using cosine hemisphere sampling (default) and your importance sampling. The sampling rate should be fixed at 64 samples per pixel and 1 samples per light. The number of bounces should be at least 5. Briefly discuss their difference.</li>
+        <li>Show at least one image with some other conductor material, replacing eta and k. Note that you should look up values for real data rather than modifying them arbitrarily. Tell us what kind of material your parameters correspond to.</li>
+      </ol><br>
+
+      <h3 aligh="middle">Responses</h3>
+      <ol>
+        <li>Generally, we notice that as alpha increases, the material appears more and more diffuse and less shiny/glossy. From 0.005 to 0.05, we see that the dragon starts to pick up some shiny, yellowish highlights along its back and other parts; the 0.005 alpha dragon is clearly "duller" to some extent. From 0.05 to 0.25, the dragon's surfaces look a lot more diffuse, but still pretty shiny. From 0.25 to 0.5, the dragon was is much more diffuse in appearance, with the shininess on its back and so on reflecting less color.</li><br>
+        <div align="center">
+            <table style="width=100%">
+                <tr>
+                    <td align="middle">
+                    <img src="images/part2/CBdragon_microfacet_au_128s_1l_m5_0-005alpha.png" width="480px" />
+                    <figcaption align="middle"><b>alpha</b> = 0.005</figcaption>
+                    <td align="middle">
+                    <img src="images/part2/CBdragon_microfacet_au_128s_1l_m5_0-05alpha.png" width="480px" />
+                    <figcaption align="middle"><b>alpha</b> = 0.05</figcaption>
+                </tr>
+                <tr>
+                    <td align="middle">
+                    <img src="images/part2/CBdragon_microfacet_au_128s_1l_m5_0-25alpha.png" width="480px" />
+                    <figcaption align="middle"><b>alpha</b> = 0.25</figcaption>
+                    <td align="middle">
+                    <img src="images/part2/CBdragon_microfacet_au_128s_1l_m5_0-5alpha.png" width="480px" />
+                    <figcaption align="middle"><b>alpha</b> = 0.5</figcaption>
+                </tr>
+            </table>
+        </div><br><br>
+
+        <li>We can see below that hemisphere sampling results in a noisier, less-converged result than importance sampling when using the same parameters. That is, importance sampling allows us to converge to an image much faster than hemipshere sampling.</li><br>
+        <div align="center">
+            <table style="width=100%">
+                <tr>
+                <p><i>64 samples per pixel, 1 sample per light, 5 bounces</i></p>
+                    <td align="middle">
+                    <img src="images/part2/CBbunny_microfacet_cu_64s_1l_m5.png" width="480px" />
+                    <figcaption align="middle">hemisphere sampling</figcaption>
+                    <td align="middle">
+                    <img src="images/part2/CBbunny_microfacet_cu_64s_1l_m5_imp.png" width="480px" />
+                    <figcaption align="middle">importance sampling</figcaption>
+                </tr>
+            </table>
+        </div><br><br>
+
+
+        <li>The following dragons are dragons rendered as cobalt material, using the following parameters:</li><br>
+        <div align="center">
+            <table style="width=100%">
+                <tr>
+                <p><i>128 samples per pixel, 1 sample per light, 5 bounces</i></p>
+                <p><i>eta = (2.1849, 2.0500, 1.7925)</i></p>
+                <p><i>k = (4.0971, 3.8200, 3.3775)</i></p>
+                    <td align="middle">
+                    <img src="images/part2/CBdragon_microfacet_co_128s_1l_m5_0-05alpha.png" width="480px" />
+                    <figcaption align="middle"><b>alpha</b> = 0.05</figcaption>
+                    <td align="middle">
+                    <img src="images/part2/CBdragon_microfacet_co_128s_1l_m5_0-5alpha.png" width="480px" />
+                    <figcaption align="middle"><b>alpha</b> = 0.5</figcaption>
+                </tr>
+            </table>
+        </div><br><br>
+      </ol><br>
+      <hr><br>
+
+
+
+    <h2 align="middle">Part 3: Environment Light</h2>
+      <h3 aligh="middle">Prompts</h3>
+      <ol>
+        <li>Show the probability_debug.png file for the .exr file you are using, generated using the save_probability_debug() helper function after initializing your probability distributions.</li>
+        <li>Use the bunny_unlit.dae scene and your environment map .exr file and render two pictures, one with uniform sampling and one with importance sampling. Use 4 samples per pixel and 64 samples per light in each. Compare noise levels.</li>
+        <li>Use the bunny_microfacet_cu_unlit.dae and your environment map .exr file and render two pictures, one with uniform sampling and one with importance sampling. Use 4 samples per pixel and 64 samples per light in each. Compare noise levels.</li>
+      </ol><br>
+
+      <h3 aligh="middle">Responses</h3>
+      <ol>
+        <li>This is the probability_debug.png for field.exr:</li>
+          <div align="center">
+              <table style="width=100%">
+                  <tr>
+                      <td align="middle">
+                      <img src="images/part3/importance_field_probability_debug.png" width="480px" />
+                  </tr>
+              </table>
+          </div><br><br>
+
+        <li>It's a bit difficult to tell, with the diffuse material, the difference in noise levels. One might be able to perceive slightly less noise in the importance sampling bunny over the uniform sampling bunny, but in this case, in this lighting, it is hard to discern. Both share a rather "speckly" quality, non-smooth-looking surfaces.</li>
+        <div align="center">
+            <table style="width=100%">
+                <tr>
+                <p><i>64 samples per pixel, 4 samples per light, 5 bounces, field.exr</i></p>
+                    <td align="middle">
+                    <img src="images/part3/bunny_unlit_64s_4l_m5_field.png" width="480px" />
+                    <figcaption align="middle">uniform sampling</figcaption>
+                    <td align="middle">
+                    <img src="images/part3/bunny_unlit_64s_4l_m5_field_imp.png" width="480px" />
+                    <figcaption align="middle">importance sampling</figcaption>
+                </tr>
+            </table>
+        </div><br><br>
+
+        <li>We can see that the uniform sampling bunny is much noisier than the importance sampling bunny, particularly along the edges of the bunny. There are fewer "speckles", including on the base. Overall, the importance sampling bunny looks a lot smoother.</li>
+        <div align="center">
+            <table style="width=100%">
+                <tr>
+                <p><i>64 samples per pixel, 4 samples per light, 5 bounces, field.exr</i></p>
+                    <td align="middle">
+                    <img src="images/part3/bunny_microfacet_cu_unlit_64s_4l_m5_field.png" width="480px" />
+                    <figcaption align="middle">uniform sampling</figcaption>
+                    <td align="middle">
+                    <img src="images/part3/bunny_microfacet_cu_unlit_64s_4l_m5_field_imp.png" width="480px" />
+                    <figcaption align="middle">importance sampling</figcaption>
+                </tr>
+            </table>
+        </div><br><br>
+      </ol>
+      <hr><br>
+
+
+    <h2 align="middle">Part 4: Depth of Field</h2>
+      <h3 aligh="middle">Prompts</h3>
+      <ol>
+        <li>Show a "focus stack" where you focus at 4 visibly different depths through a scene.</li>
+        <li>Show a sequence of 4 pictures with visibly different aperture sizes, all focused at the same point in a scene.</li>
+      </ol><br>
+      <h3 aligh="middle">Responses</h3>
+      <ol>
+        <li>This is a sequence of 5 pictures focused at different depths through the scene of this dragon.</li>
+        <div align="center">
+            <table style="width=100%">
+                <tr>
+                <p><i>64 samples per pixel, 4 samples per light, 8 bounces</i></p>
+                    <td align="middle">
+                    <img src="images/part4/CBdragon_64s_4l_8m_1-5d.png" width="480px" />
+                    <figcaption align="middle">focal distance = 1.5</figcaption>
+                    <td align="middle">
+                    <img src="images/part4/CBdragon_64s_4l_8m_1-6d.png" width="480px" />
+                    <figcaption align="middle">focal distance = 1.6</figcaption>
+                    <td align="middle">
+                    <img src="images/part4/CBdragon_64s_4l_8m_1-7d.png" width="480px" />
+                    <figcaption align="middle">focal distance = 1.7</figcaption>
+                    <td align="middle">
+                    <img src="images/part4/CBdragon_64s_4l_8m_1-8d.png" width="480px" />
+                    <figcaption align="middle">focal distance = 1.8</figcaption>
+                    <td align="middle">
+                    <img src="images/part4/CBdragon_64s_4l_8m_1-9d.png" width="480px" />
+                    <figcaption align="middle">focal distance = 1.9</figcaption>
+                </tr>
+            </table>
+        </div><br><br>
+        <li>This is a sequence of 5 pictures with different aperture sizes, all focused on this dragon.</li>
+        <div align="center">
+            <table style="width=100%">
+                <tr>
+                <p><i>8 samples per pixel, 2 samples per light, 8 bounces</i></p>
+                    <td align="middle">
+                    <img src="images/part4/CBdragon_8s_2l_8m_decr2.png" width="480px" />
+                    <td align="middle">
+                    <img src="images/part4/CBdragon_8s_2l_8m_decr1.png" width="480px" />
+                    <td align="middle">
+                    <img src="images/part4/CBdragon_8s_2l_8m_default.png" width="480px" />
+                    <td align="middle">
+                    <img src="images/part4/CBdragon_8s_2l_8m_incr1.png" width="480px" />
+                    <td align="middle">
+                    <img src="images/part4/CBdragon_8s_2l_8m_incr2.png" width="480px" />
+                </tr>
+            </table>
+        </div><br><br>
+      </ol><br>
+      <hr><br>
+
+
+    <h2 align="middle">Part 5: Shaders</h2>
+      <h3 aligh="middle">Prompts</h3>
+      <ol>
+        <li>Copy the production gl directory to your docs directory. Make sure there is an anchor to gl/index.html somewhere in your writeup.</li>
+        <li>Briefly explain in your own words what is a shader program and how vertex and fragment shaders work together to create lighting and material effects.</li>
+        <li>Explain the Blinn-Phong shading model in your own words. Show a screen shot of your Blinn-Phong shader outputting only the ambient component, a screen shot only outputting the diffuse component, a screen shot only outputting the specular component, and one using the entire Blinn-Phong model.</li>
+        <li>Show a screenshot of your texture mapping shader using your own custom texture by modifying src/renderers/t3-renderer.</li>
+        <li>Show a screenshot of bump mapping and displacement mapping using the same texture for both renders. You can either provide your own texture or use one of the ones in the textures directory, BUT choose one that's not the default displacement2.png. Compare the two approaches and resulting renders in your own words. Compare how your the two shaders react to mesh coarseness by modifying the number of vertical and horizontal components in t4-1-renderer.js and t4-2-renderer.js. These are controlled by the 2nd and 3rd arguments to the SphereBufferGeometry constructor.</li>
+        <li>Explain what you did in your custom shader!</li>
+      </ol><br>
+
+      <h3 aligh="middle">Responses</h3>
+      <ol>
+        <li><a href="gl/index.html">Link to my Part 5 gl/ directory!</a></li><br><br>
+
+        <li>A shader program is basically a program that leverages parallelization to apply many transformations to render objects. In the case of WebGL, the program is also device-agnostic, whereas the programs we've been writing must be compiled to suit our specific computer builds. Vertex shaders essentially define, transform, and manipulate the position of objects as well as their normals. The output of these shaders are then the input to fragment shaders, which apply color, textures, material effects, and lighting effects to an object.</li><br><br>
+
+        <li>The Blinn-Phong shading model essentially breaks up the shading process into 3 different lightings (ambient, diffuse, and specular) calculated separately then superimposed together to produce more realistic lighting effects. The ambient lighting represents the "global illumination" type of lighting, preventing shadows from being too dark. The diffuse lighting is how the light is spread out upon hitting the material. The specular lighting is the light that bounces from the light, directly back into the camera.</li>
+        <div align="center">
+            <table style="width=100%">
+                <tr>
+                  <p><i>k_a = 0.0, k_d = 0.9, k_s = 0.4, p = 30.0</i></p>
+                    <td align="middle">
+                    <img src="images/part5/task2-ambient.png" width="360px" />
+                    <figcaption align="middle">ambient</figcaption>
+                    <td align="middle">
+                      +
+                    <td align="middle">
+                    <img src="images/part5/task2-diffuse.png" width="360px" />
+                    <figcaption align="middle">diffuse</figcaption>
+                    <td align="middle">
+                      +
+                    <td align="middle">
+                    <img src="images/part5/task2-specular.png" width="360px" />
+                    <figcaption align="middle">specular</figcaption>
+                    <td align="middle">
+                      =
+                    <td align="middle">
+                    <img src="images/part5/task2-phong.png" width="360px" />
+                    <figcaption align="middle">Blinn-Phong</figcaption>
+                </tr>
+            </table>
+        </div><br><br>
+
+        <li>This is a photo of a flower I took several years ago!</li><br>
+          <div align="center">
+              <table style="width=100%">
+                  <tr>
+                      <td align="middle">
+                      <img src="images/part5/my_texture.png" width="360px" />
+                      <figcaption align="middle">original texture image</figcaption>
+                      <td align="middle">
+                      <td align="middle">
+                      <td align="middle">
+                      <img src="images/part5/my_texture_mapped.png" width="480px" />
+                      <figcaption align="middle">texture mapped onto a sphere</figcaption>
+                  </tr>
+              </table>
+          </div><br><br>
+
+        <li>
+          The middle row is the result of using the default parameters for bump and displacement mappings with texture displacement3. We can see that the bump mapping simply alters how the light shines on the sphere by adjusting the normals, whereas the displacement mapping increases the "height" of the non-ridge parts of the sphere as well. Thus, the latter deviates from the original radius of the sphere in addition to adjusting the normals, whereas the former adjusts the normals but maintains the sphere's original shape.<br><br>
+          We can see when we halve the number of horizontal/vertical components, the resolution of the texture on both spheres decreases, looking blurrier overall and less accurate. In the case of the displacement mapping, the raised edges of the sphere are also a little less rough or sharp. This makes sense given we have fewer shapes to capture the same amount of detail. Comparing the 512-component and 128-component images better shows the loss of texture resolution and accuracy as we decrease in the number of components.
+        </li>
+          <div align="center">
+              <table style="width=100%">
+                  <p><i>using displacement3.png</i></p>
+                  <tr>
+                      <td align="middle">
+                      <img src="images/part5/task4-1-displacement3-128.png" width="480px" />
+                      <figcaption align="middle">bump mapping</figcaption>
+                      <figcaption align="middle">128 horizontal and vertical components</figcaption>
+                      <td align="middle">
+                      <img src="images/part5/task4-2-displacement3-128.png" width="480px" />
+                      <figcaption align="middle">displacement mapping</figcaption>
+                      <figcaption align="middle">128 horizontal and vertical components</figcaption>
+                  </tr>
+                  <tr>
+                      <td align="middle">
+                      <img src="images/part5/task4-1-displacement3-256.png" width="480px" />
+                      <figcaption align="middle">bump mapping</figcaption>
+                      <figcaption align="middle">256 horizontal and vertical components</figcaption>
+                      <td align="middle">
+                      <img src="images/part5/task4-2-displacement3-256.png" width="480px" />
+                      <figcaption align="middle">displacement mapping</figcaption>
+                      <figcaption align="middle">256 horizontal and vertical components</figcaption>
+                  </tr>
+                  <tr>
+                      <td align="middle">
+                      <img src="images/part5/task4-1-displacement3-512.png" width="480px" />
+                      <figcaption align="middle">bump mapping</figcaption>
+                      <figcaption align="middle">512 horizontal and vertical components</figcaption>
+                      <td align="middle">
+                      <img src="images/part5/task4-2-displacement3-512.png" width="480px" />
+                      <figcaption align="middle">displacement mapping</figcaption>
+                      <figcaption align="middle">512 horizontal and vertical components</figcaption>
+                  </tr>
+              </table>
+          </div><br><br>
+
+        <li>For my custom shader, I decided to experiment with changing the motion and coloring effects of the geometries given to me. I decided to add a TorusGeometry in addition to the SphereGeometry and mess with both of their parameters to alter the size and number of components. I also altered the over-time coloring effects to try out a different range/gradient of colors. I also tried to alter the motion of the shapes' normals, instead of being as blobby and mushy, it's more of a high-energy, low-polygonal, spinning, semi-in-sync jitter-dance. I think it looks really funny, and I call it:<br>
+          <h3>"I'm Shaking From What We've Been Through But Nothing Could Have <i>Torus</i> Apart."</h3>
+          <strike>It's a metaphor for this class: it's put me through so much struggle but I love it so much.</strike>
+        </li><br><br>
+      </ol><br>
+
+      <hr><br>
+
+
+</div>
+</body>
+</html>
