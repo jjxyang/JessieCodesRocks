@@ -7,7 +7,6 @@
 
     <title>Jessie Yang - Projects Portfolio</title>
 
-    <link href="assets/css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
     <!--[if lt IE 9]>
@@ -19,14 +18,12 @@
     <script src="assets/js/bootstrap.min.js"></script>
     <script>
       $(function(){
-        $("#navbar").load("components/navbar.html");
+        $("#navbar").load("../components/navbar.html");
       });
     </script>
   </head>
 
   <body>
-    <div id="navbar"></div>
-
     <div class="jumbotron">
       <div class="container">
         <h1>The (Ongoing) Development Process of Uplift</h1>
@@ -220,6 +217,7 @@
             <ul>
               <li>There is plenty of room for further progression in the game - perhaps more falling obstacles that behave differently and/or must be handled differently.</li>
               <li>The game's difficulty curve is fairly arbitrary right now, since the clouds' spawn rates simply increase linearly - the timing could definitely be tweaked to provide a clearer and fairer sense of progression.</li>
+              <li>The game needs a menu and a better way to explain the controls besides in small text at the bottom of the screen.</li>
               <li>We could implement a fail state in the game, though I enjoy the "endless" nature of it so perhaps not an explicit win state.</li>
               <li>The dash could use more iteration to feel smoother and less jarring.
                   It could also use a visual indication of when the two-second cooldown ends.</li>
